@@ -1,16 +1,12 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 
-import { TaskItemComponent } from './task-item/task-item.component';
-import { TASK_STATUS_OPTION, TaskOptionStatusProvider } from '../task.model';
-import { TaskServiceToken } from '../../../main';
+import { TASK_STATUS_OPTION } from '../task.model';
+import { TaskServiceToken } from '../../app.module';
 
 @Component({
   selector: 'app-tasks-list',
-  standalone: true,
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css',
-  imports: [TaskItemComponent],
-  providers: [TaskOptionStatusProvider]
 })
 export class TasksListComponent implements OnInit {
   private selectedFilter = signal<string>('all');

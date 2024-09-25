@@ -1,11 +1,8 @@
-import { bootstrapApplication } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
 
-import { AppComponent } from './app/app.component';
-import { TaskService } from './app/tasks/task.service';
-import { InjectionToken } from '@angular/core';
+// bootstrapApplication(AppComponent, {
+//   providers: []
+// }).catch((err) => console.error(err));
 
-export const TaskServiceToken = new InjectionToken<TaskService>('task-service-token')
-
-bootstrapApplication(AppComponent, {
-  providers: [{provide: TaskServiceToken, useClass: TaskService}]
-}).catch((err) => console.error(err));
+platformBrowserDynamic().bootstrapModule(AppModule);
