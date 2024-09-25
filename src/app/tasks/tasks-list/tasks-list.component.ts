@@ -3,6 +3,7 @@ import { Component, computed, effect, inject, OnInit, signal } from '@angular/co
 import { TaskItemComponent } from './task-item/task-item.component';
 import { TaskService } from '../task.service';
 import { Task } from '../task.model';
+import { TaskServiceToken } from '../../../main';
 
 @Component({
   selector: 'app-tasks-list',
@@ -14,7 +15,7 @@ import { Task } from '../task.model';
 export class TasksListComponent implements OnInit {
   private selectedFilter = signal<string>('all');
   // tasks = signal<Task[]>([]);
-  private tService = inject(TaskService);
+  private tService = inject(TaskServiceToken);
   // tasks = this.tService.allTasks;
   tasks = computed(() => {
     switch (this.selectedFilter()) {
