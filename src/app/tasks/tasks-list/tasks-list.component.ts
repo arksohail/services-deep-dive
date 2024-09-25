@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TASK_STATUS_OPTION } from '../task.model';
 import { TaskServiceToken } from '../../app.module';
@@ -8,37 +8,28 @@ import { TaskServiceToken } from '../../app.module';
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css',
 })
-export class TasksListComponent implements OnInit {
-  private selectedFilter = signal<string>('all');
-  // tasks = signal<Task[]>([]);
+export class TasksListComponent {
+  selectedFilter = "all";
   private tService = inject(TaskServiceToken);
-  // tasks = this.tService.allTasks;
   taskStatusOption = inject(TASK_STATUS_OPTION);
 
-  tasks = computed(() => {
-    switch (this.selectedFilter()) {
+  get tasks() {
+    switch (this.selectedFilter) {
       case 'open':
-        return this.tService.allTasks().filter(task => task.status === 'OPEN');
+        return this.tService.allTasks.filter(task => task.status === 'OPEN');
       case 'in-progress':
-        return this.tService.allTasks().filter(task => task.status === 'IN_PROGRESS');
+        return this.tService.allTasks.filter(task => task.status === 'IN_PROGRESS');
       case 'done':
-        return this.tService.allTasks().filter(task => task.status === 'DONE');
+        return this.tService.allTasks.filter(task => task.status === 'DONE');
       default:
-        return this.tService.allTasks();
+        return this.tService.allTasks;
     }
-  })
+  }
 
-  // constructor(private tService: TaskService) { 
-  // this.tasks.set(this.tService.tasks());
-  // }
+  constructor() { }
 
 
   onChangeTasksFilter(filter: string) {
-    this.selectedFilter.set(filter);
-  }
-
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.selectedFilter = filter;
   }
 }
