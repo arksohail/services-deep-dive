@@ -1,8 +1,7 @@
 import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 
 import { TaskItemComponent } from './task-item/task-item.component';
-import { TaskService } from '../task.service';
-import { Task } from '../task.model';
+import { TASK_STATUS_OPTION, TaskOptionStatusProvider } from '../task.model';
 import { TaskServiceToken } from '../../../main';
 
 @Component({
@@ -11,12 +10,15 @@ import { TaskServiceToken } from '../../../main';
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css',
   imports: [TaskItemComponent],
+  providers: [TaskOptionStatusProvider]
 })
 export class TasksListComponent implements OnInit {
   private selectedFilter = signal<string>('all');
   // tasks = signal<Task[]>([]);
   private tService = inject(TaskServiceToken);
   // tasks = this.tService.allTasks;
+  taskStatusOption = inject(TASK_STATUS_OPTION);
+
   tasks = computed(() => {
     switch (this.selectedFilter()) {
       case 'open':
